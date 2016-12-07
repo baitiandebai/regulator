@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fpds.dao.QualityFocusMapper">
+	<resultMap id="BaseResultMap" type="com.fpds.entity.QualityFocus">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="platform" property="platform" jdbcType="INTEGER" />
+		<result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+		<result column="category" property="category" jdbcType="INTEGER" />
+		<result column="is" property="is" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.fpds.entity.QualityFocus"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, title, type, platform, publish_time, create_time,
+		thumbnail, category, `is`
+	</sql>
+
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+
+	<select id="getNewById" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from quality_focus
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getNewByType" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from quality_focus
+		<if test="type != 0">
+		where type = #{type,jdbcType=VARCHAR} 
+		</if>
+		 order by create_time  limit #{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+
+	<select id="getNewByCategory" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from quality_focus
+		<if test="category != 0">
+		where category = #{category,jdbcType=VARCHAR} 
+		</if>
+		order by create_time  limit #{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+
+	<select id="getNewByKeyword" resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from quality_focus
+		where title like CONCAT('%',#{keyword},'%') order by create_time limit
+		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteNew" parameterType="java.lang.String">
+		delete from quality_focus
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="saveNew" parameterType="com.fpds.entity.QualityFocus">
+		insert into quality_focus
+		(id, title, type,
+		platform, publish_time, create_time,
+		thumbnail,
+		category, `is`,
+		content)
+		values (#{id,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{type,jdbcType=INTEGER},
+		#{platform,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{thumbnail,jdbcType=VARCHAR},
+		#{category,jdbcType=INTEGER},
+		#{is,jdbcType=INTEGER},
+		#{content,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.fpds.entity.QualityFocus">
+		insert into quality_focus
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="platform != null">
+				platform,
+			</if>
+			<if test="publishTime != null">
+				publish_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="thumbnail != null">
+				thumbnail,
+			</if>
+			<if test="category != null">
+				category,
+			</if>
+			<if test="is != null">
+				`is`,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="platform != null">
+				#{platform,jdbcType=INTEGER},
+			</if>
+			<if test="publishTime != null">
+				#{publishTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="thumbnail != null">
+				#{thumbnail,jdbcType=VARCHAR},
+			</if>
+			<if test="category != null">
+				#{category,jdbcType=INTEGER},
+			</if>
+			<if test="is != null">
+				#{is,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateNew" parameterType="com.fpds.entity.QualityFocus">
+		update quality_focus
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=INTEGER},
+			</if>
+			<if test="platform != null">
+				platform = #{platform,jdbcType=INTEGER},
+			</if>
+			<if test="publishTime != null">
+				publish_time = #{publishTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="thumbnail != null">
+				thumbnail = #{thumbnail,jdbcType=VARCHAR},
+			</if>
+			<if test="category != null">
+				category = #{category,jdbcType=INTEGER},
+			</if>
+			<if test="is != null">
+				`is` = #{is,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fpds.entity.QualityFocus">
+		update
+		quality_focus
+		set title = #{title,jdbcType=VARCHAR},
+		type =
+		#{type,jdbcType=INTEGER},
+		platform = #{platform,jdbcType=INTEGER},
+		publish_time = #{publishTime,jdbcType=TIMESTAMP},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		thumbnail = #{thumbnail,jdbcType=VARCHAR},
+		category = #{category,jdbcType=INTEGER},
+		`is` = #{is,jdbcType=INTEGER},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fpds.entity.QualityFocus">
+		update
+		quality_focus
+		set title = #{title,jdbcType=VARCHAR},
+		type =
+		#{type,jdbcType=INTEGER},
+		platform = #{platform,jdbcType=INTEGER},
+		publish_time = #{publishTime,jdbcType=TIMESTAMP},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		thumbnail = #{thumbnail,jdbcType=VARCHAR},
+		category = #{category,jdbcType=INTEGER},
+		`is` = #{is,jdbcType=INTEGER}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

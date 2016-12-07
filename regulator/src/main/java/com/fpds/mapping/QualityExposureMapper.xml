@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fpds.dao.QualityExposureMapper">
+	<resultMap id="BaseResultMap" type="com.fpds.entity.QualityExposure">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+		<result column="product_name" property="productName" jdbcType="VARCHAR" />
+		<result column="brand" property="brand" jdbcType="VARCHAR" />
+		<result column="model" property="model" jdbcType="VARCHAR" />
+		<result column="batch" property="batch" jdbcType="VARCHAR" />
+		<result column="result" property="result" jdbcType="VARCHAR" />
+		<result column="reason" property="reason" jdbcType="VARCHAR" />
+		<result column="accreditation_body" property="accreditationBody"
+			jdbcType="VARCHAR" />
+		<result column="product_class1" property="productClass1"
+			jdbcType="INTEGER" />
+		<result column="product_class1_name" property="productClass1Name"
+			jdbcType="VARCHAR" />
+		<result column="product_class2" property="productClass2"
+			jdbcType="INTEGER" />
+		<result column="product_class2_name" property="productClass2Name"
+			jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="is" property="is" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, company_name, location, product_name, brand, model, batch, result,
+		reason, accreditation_body,
+		product_class1, product_class1_name, product_class2, product_class2_name,
+		create_time,`is`
+	</sql>
+
+	<select id="getExposureById" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from quality_exposure
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getExposureByProductClass" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from quality_exposure 
+		<if test="productClass1 != 0">
+			where product_class1 = #{productClass1} 
+			<if test="productClass2 != 0">
+			 and product_class2 = #{productClass2}
+			</if>
+		</if> 
+		order by create_time limit #{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+	<!-- 根据关键字查询 -->
+	<select id="getExposureByKeyword" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from quality_exposure
+		where company_name like CONCAT('%',#{keyword},'%')
+		or product_name like CONCAT('%',#{keyword},'%') order by create_time  limit
+		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
+
+
+	<delete id="deleteExposure" parameterType="java.lang.String">
+		delete from quality_exposure
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="saveExposure" parameterType="com.fpds.entity.QualityExposure">
+		insert into quality_exposure (id, company_name, location,
+		product_name, brand, model,
+		batch, result, reason,
+		accreditation_body, product_class1, product_class1_name,
+		product_class2, product_class2_name, create_time,
+		`is`)
+		values (#{id,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR},
+		#{location,jdbcType=VARCHAR},
+		#{productName,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR},
+		#{batch,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
+		#{reason,jdbcType=VARCHAR},
+		#{accreditationBody,jdbcType=VARCHAR}, #{productClass1,jdbcType=INTEGER},
+		#{productClass1Name,jdbcType=VARCHAR},
+		#{productClass2,jdbcType=INTEGER},
+		#{productClass2Name,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{is,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="saveExposureList" parameterType="java.util.List">
+		insert into quality_exposure
+		(id, company_name, location,
+		product_name, brand, model,
+		batch, result, reason,
+		accreditation_body, product_class1, product_class1_name,
+		product_class2, product_class2_name, create_time,
+		`is`) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.id != null">
+					#{item.id,jdbcType=VARCHAR},
+				</if>
+				<if test="item.companyName != null">
+					#{item.companyName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.location != null">
+					#{item.location,jdbcType=VARCHAR},
+				</if>
+				<if test="item.productName != null">
+					#{item.productName,jdbcType=VARCHAR},
+				</if>
+				<if test="item.brand != null">
+					#{item.brand,jdbcType=VARCHAR},
+				</if>
+				<if test="item.model != null">
+					#{item.model,jdbcType=VARCHAR},
+				</if>
+				<if test="item.batch != null">
+					#{item.batch,jdbcType=VARCHAR},
+				</if>
+				<if test="item.result != null">
+					#{item.result,jdbcType=VARCHAR},
+				</if>
+				<if test="item.reason != null">
+					#{item.reason,jdbcType=VARCHAR},
+				</if>
+				<if test="item.accreditationBody != null">
+					#{item.accreditationBody,jdbcType=VARCHAR},
+				</if>
+				<if test="item.productClass1 != null">
+					#{item.productClass1,jdbcType=INTEGER},
+				</if>
+				<if test="item.productClass1Name != null">
+					#{item.productClass1Name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.productClass2 != null">
+					#{item.productClass2,jdbcType=INTEGER},
+				</if>
+				<if test="item.productClass2Name != null">
+					#{item.productClass2Name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.createTime != null">
+					#{item.createTime,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.is != null">
+					#{item.is,jdbcType=INTEGER}
+				</if>
+			</trim>
+		</foreach>
+	</insert>
+
+	<update id="updateExposure" parameterType="com.fpds.entity.QualityExposure">
+		update quality_exposure
+		<set>
+			<if test="companyName != null">
+				company_name = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null">
+				location = #{location,jdbcType=VARCHAR},
+			</if>
+			<if test="productName != null">
+				product_name = #{productName,jdbcType=VARCHAR},
+			</if>
+			<if test="brand != null">
+				brand = #{brand,jdbcType=VARCHAR},
+			</if>
+			<if test="model != null">
+				model = #{model,jdbcType=VARCHAR},
+			</if>
+			<if test="batch != null">
+				batch = #{batch,jdbcType=VARCHAR},
+			</if>
+			<if test="result != null">
+				result = #{result,jdbcType=VARCHAR},
+			</if>
+			<if test="reason != null">
+				reason = #{reason,jdbcType=VARCHAR},
+			</if>
+			<if test="accreditationBody != null">
+				accreditation_body = #{accreditationBody,jdbcType=VARCHAR},
+			</if>
+			<if test="productClass1 != null">
+				product_class1 = #{productClass1,jdbcType=INTEGER},
+			</if>
+			<if test="productClass1Name != null">
+				product_class1_name = #{productClass1Name,jdbcType=VARCHAR},
+			</if>
+			<if test="productClass2 != null">
+				product_class2 = #{productClass2,jdbcType=INTEGER},
+			</if>
+			<if test="productClass2Name != null">
+				product_class2_name = #{productClass2Name,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="is != null">
+				`is` = #{is,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+</mapper>
