@@ -67,7 +67,8 @@ public class FocusController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityFocus> qualityFocusList = focusService.getNewByType(current, size, type);
-		map.put("total",qualityFocusList.size());
+		Integer total = focusService.getNewByTypeTotal(type);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityFocusList));
 		return JSONObject.toJSONString(map);
 	}
@@ -89,7 +90,8 @@ public class FocusController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityFocus> qualityFocusList = focusService.getNewByCategory(current, size, category);
-		map.put("total",qualityFocusList.size());
+		Integer total = focusService.getNewByCategoryTotal(category);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityFocusList));
 		return JSONObject.toJSONString(map);
 	}
@@ -111,7 +113,8 @@ public class FocusController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityFocus> qualityFocusList = focusService.getNewByKeyword(current, size, keyword);
-		map.put("total",qualityFocusList.size());
+		Integer total = focusService.getNewByKeywordTotal(keyword);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityFocusList));
 		return JSONObject.toJSONString(map);
 	}

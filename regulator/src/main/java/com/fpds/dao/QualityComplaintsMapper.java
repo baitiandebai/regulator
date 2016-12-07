@@ -23,4 +23,11 @@ public interface QualityComplaintsMapper {
     public QualityComplaints getComplaintsById(String id);
 
     public Integer updateComplaints(QualityComplaints qualityComplaints);
+    
+    public Integer getComplaintsByTypeTotal(@Param("type")String type);
+    
+    public Integer getComplaintsByCategoryTotal(@Param("category")String category);
+    
+    public Integer getComplaintsByKeywordTotal(@Param("keyword")String keyword);
+    
 }

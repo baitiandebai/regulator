@@ -101,4 +101,40 @@ public class FocusServiceImpl implements FocusServiceInter {
 		}
 	}
 
+	@Override
+	public Integer getNewByTypeTotal(String type) {
+		try {
+			Integer total = focusDao.getNewByTypeTotal(type);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public Integer getNewByCategoryTotal(String category) {
+		try {
+			Integer total = focusDao.getNewByCategoryTotal(category);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public Integer getNewByKeywordTotal(String keyword) {
+		try {
+			Integer total = focusDao.getNewByKeywordTotal(keyword);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
 }

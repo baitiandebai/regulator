@@ -23,4 +23,11 @@ public interface QualityFocusMapper {
     public QualityFocus getNewById(String id);
 
     public Integer updateNew(QualityFocus record);
+    
+    public Integer getNewByTypeTotal( @Param("type")String type);
+    
+    public Integer getNewByCategoryTotal(@Param("category")String category);
+    
+    public Integer getNewByKeywordTotal(@Param("keyword")String keyword);
+    
 }

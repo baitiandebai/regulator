@@ -49,7 +49,8 @@ public class ComplaintsController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityComplaints> qualityComplaintsList = complaintsService.getComplaintsByCategory(current, size, category);
-		map.put("total",qualityComplaintsList.size());
+		Integer total = complaintsService.getComplaintsByCategoryTotal(category);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityComplaintsList));
 		return JSONObject.toJSONString(map);
 	}
@@ -64,7 +65,8 @@ public class ComplaintsController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityComplaints> qualityComplaintsList = complaintsService.getComplaintsByType(current, size, type);
-		map.put("total",qualityComplaintsList.size());
+		Integer total = complaintsService.getComplaintsByTypeTotal(type);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityComplaintsList));
 		return JSONObject.toJSONString(map);
 	}
@@ -79,7 +81,8 @@ public class ComplaintsController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityComplaints> qualityComplaintsList = complaintsService.getComplaintsByKeyword(current, size, keyword);
-		map.put("total",qualityComplaintsList.size());
+		Integer total = complaintsService.getComplaintsByKeywordTotal(keyword);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityComplaintsList));
 		return JSONObject.toJSONString(map);
 	}

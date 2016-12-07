@@ -100,4 +100,39 @@ public class ComplaintsServiceImpl implements ComplaintsServiceInter{
 		return result;
 	}
 
+	@Override
+	public Integer getComplaintsByTypeTotal(String type) {
+		try {
+			Integer total = complaintsDao.getComplaintsByTypeTotal(type);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public Integer getComplaintsByCategoryTotal(String category) {
+		try {
+			Integer total = complaintsDao.getComplaintsByCategoryTotal(category);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public Integer getComplaintsByKeywordTotal(String keyword) {
+		try {
+			Integer total = complaintsDao.getComplaintsByKeywordTotal(keyword);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
 }

@@ -25,9 +25,11 @@
 		<result column="is" property="is" jdbcType="INTEGER" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, company_name, location, product_name, brand, model, batch, result,
+		id, company_name, location, product_name, brand, model,
+		batch, result,
 		reason, accreditation_body,
-		product_class1, product_class1_name, product_class2, product_class2_name,
+		product_class1,
+		product_class1_name, product_class2, product_class2_name,
 		create_time,`is`
 	</sql>
 
@@ -42,44 +44,74 @@
 	<select id="getExposureByProductClass" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from quality_exposure 
+		from quality_exposure
 		<if test="productClass1 != 0">
-			where product_class1 = #{productClass1} 
+			where product_class1 = #{productClass1}
 			<if test="productClass2 != 0">
-			 and product_class2 = #{productClass2}
+				and product_class2 = #{productClass2}
 			</if>
-		</if> 
-		order by create_time limit #{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+		</if>
+		order by create_time limit
+		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
+
+	<select id="getExposureByProductClassTotal" resultType="java.lang.Integer">
+		select count(id)
+		from quality_exposure
+		<if test="productClass1 != 0">
+			where product_class1 = #{productClass1}
+			<if test="productClass2 != 0">
+				and product_class2 = #{productClass2}
+			</if>
+		</if>
+	</select>
+
 	<!-- 根据关键字查询 -->
 	<select id="getExposureByKeyword" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from quality_exposure
-		where company_name like CONCAT('%',#{keyword},'%')
-		or product_name like CONCAT('%',#{keyword},'%') order by create_time  limit
+		where company_name like
+		CONCAT('%',#{keyword},'%')
+		or product_name like
+		CONCAT('%',#{keyword},'%') order by create_time limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 
+	<select id="getExposureByKeywordTotal" resultType="java.lang.Integer">
+		select count(id)
+		from quality_exposure
+		where company_name like
+		CONCAT('%',#{keyword},'%')
+		or product_name like
+		CONCAT('%',#{keyword},'%') order by create_time limit
+		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+	</select>
 
 	<delete id="deleteExposure" parameterType="java.lang.String">
-		delete from quality_exposure
+		delete from
+		quality_exposure
 		where id = #{id,jdbcType=VARCHAR}
 	</delete>
 
 	<insert id="saveExposure" parameterType="com.fpds.entity.QualityExposure">
-		insert into quality_exposure (id, company_name, location,
-		product_name, brand, model,
+		insert into
+		quality_exposure (id, company_name, location,
+		product_name, brand,
+		model,
 		batch, result, reason,
-		accreditation_body, product_class1, product_class1_name,
+		accreditation_body, product_class1,
+		product_class1_name,
 		product_class2, product_class2_name, create_time,
 		`is`)
 		values (#{id,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR},
 		#{location,jdbcType=VARCHAR},
-		#{productName,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR},
+		#{productName,jdbcType=VARCHAR},
+		#{brand,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR},
 		#{batch,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR},
 		#{reason,jdbcType=VARCHAR},
-		#{accreditationBody,jdbcType=VARCHAR}, #{productClass1,jdbcType=INTEGER},
+		#{accreditationBody,jdbcType=VARCHAR},
+		#{productClass1,jdbcType=INTEGER},
 		#{productClass1Name,jdbcType=VARCHAR},
 		#{productClass2,jdbcType=INTEGER},
 		#{productClass2Name,jdbcType=VARCHAR},
@@ -90,9 +122,11 @@
 	<insert id="saveExposureList" parameterType="java.util.List">
 		insert into quality_exposure
 		(id, company_name, location,
-		product_name, brand, model,
+		product_name,
+		brand, model,
 		batch, result, reason,
-		accreditation_body, product_class1, product_class1_name,
+		accreditation_body, product_class1,
+		product_class1_name,
 		product_class2, product_class2_name, create_time,
 		`is`) values
 		<foreach collection="list" item="item" index="index"
@@ -178,19 +212,22 @@
 				reason = #{reason,jdbcType=VARCHAR},
 			</if>
 			<if test="accreditationBody != null">
-				accreditation_body = #{accreditationBody,jdbcType=VARCHAR},
+				accreditation_body =
+				#{accreditationBody,jdbcType=VARCHAR},
 			</if>
 			<if test="productClass1 != null">
 				product_class1 = #{productClass1,jdbcType=INTEGER},
 			</if>
 			<if test="productClass1Name != null">
-				product_class1_name = #{productClass1Name,jdbcType=VARCHAR},
+				product_class1_name =
+				#{productClass1Name,jdbcType=VARCHAR},
 			</if>
 			<if test="productClass2 != null">
 				product_class2 = #{productClass2,jdbcType=INTEGER},
 			</if>
 			<if test="productClass2Name != null">
-				product_class2_name = #{productClass2Name,jdbcType=VARCHAR},
+				product_class2_name =
+				#{productClass2Name,jdbcType=VARCHAR},
 			</if>
 			<if test="createTime != null">
 				create_time = #{createTime,jdbcType=TIMESTAMP},

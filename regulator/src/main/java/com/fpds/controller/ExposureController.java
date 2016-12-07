@@ -77,7 +77,8 @@ public class ExposureController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityExposure> qualityExposureList = exposureService.getExposureByProductClass(current, size, productClass1,productClass2);
-		map.put("total",qualityExposureList.size());
+		Integer total = exposureService.getExposureByProductClassTotal(productClass1, productClass2);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityExposureList));
 		return JSONObject.toJSONString(map);
 	}
@@ -100,7 +101,8 @@ public class ExposureController {
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<QualityExposure> qualityExposuresList = exposureService.getExposureByKeyword(current, size, keyword);
-		map.put("total",qualityExposuresList.size());
+		Integer total = exposureService.getExposureByKeywordTotal(keyword);
+		map.put("total",total);
 		map.put("data",JSONObject.toJSONString(qualityExposuresList));
 		return JSONObject.toJSONString(map);
 	}

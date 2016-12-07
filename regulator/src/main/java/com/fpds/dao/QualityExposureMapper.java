@@ -23,4 +23,10 @@ public interface QualityExposureMapper {
     public Integer updateExposure(QualityExposure record);
     
     public Integer saveExposureList(List<QualityExposure> qualityExposuresList);
+
+    public Integer getExposureByProductClassTotal(@Param("productClass1")String productClass1,
+    		@Param("productClass2")String productClass2);
+    
+    public Integer getExposureByKeywordTotal(@Param("keyword")String keyword);
+    
 }

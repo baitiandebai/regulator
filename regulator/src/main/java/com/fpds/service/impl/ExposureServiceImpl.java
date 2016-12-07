@@ -103,5 +103,28 @@ public class ExposureServiceImpl implements ExposureServiceInter{
     	return result;
     }
 
-	
+	@Override
+	public Integer getExposureByProductClassTotal(String productClass1, String productClass2) {
+		try {
+			Integer total = exposureDao.getExposureByProductClassTotal(productClass1,productClass2);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
+	@Override
+	public Integer getExposureByKeywordTotal(String keyword) {
+		try {
+			Integer total = exposureDao.getExposureByKeywordTotal(keyword);
+			return total;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error(e.getMessage());
+			return null;
+		}
+	}
+
 }

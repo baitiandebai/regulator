@@ -19,4 +19,11 @@ public interface ComplaintsServiceInter {
 	public String deleteComplaints(String id);
 
 	public String updateComplaints(QualityComplaints qualityComplaints);
+	
+	public Integer getComplaintsByTypeTotal(String type);
+	    
+	public Integer getComplaintsByCategoryTotal(String category);
+	    
+	public Integer getComplaintsByKeywordTotal(String keyword);
+	    
 }
