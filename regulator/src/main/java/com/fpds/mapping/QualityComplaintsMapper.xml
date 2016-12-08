@@ -75,7 +75,7 @@
 		<if test="category != 0">
 			where category = #{category,jdbcType=VARCHAR}
 		</if>
-		order by create_time limit
+		order by create_time desc limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 
@@ -94,7 +94,7 @@
 		where title like CONCAT('%',#{keyword},'%') or
 		product_detail like CONCAT('%',#{keyword},'%') or
 		name like
-		CONCAT('%',#{keyword},'%') order by create_time limit
+		CONCAT('%',#{keyword},'%') order by create_time desc limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 

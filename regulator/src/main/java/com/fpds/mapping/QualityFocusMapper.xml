@@ -45,7 +45,7 @@
 		<if test="type != 0">
 			where type = #{type,jdbcType=VARCHAR}
 		</if>
-		order by create_time limit
+		order by create_time  desc limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 
@@ -67,7 +67,7 @@
 		<if test="category != 0">
 			where category = #{category,jdbcType=VARCHAR}
 		</if>
-		order by create_time limit
+		order by create_time desc limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 
@@ -86,7 +86,7 @@
 		<include refid="Blob_Column_List" />
 		from quality_focus
 		where title like CONCAT('%',#{keyword},'%') order by
-		create_time limit
+		create_time desc limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 

@@ -51,7 +51,7 @@
 				and product_class2 = #{productClass2}
 			</if>
 		</if>
-		order by create_time limit
+		order by create_time desc limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 
@@ -74,7 +74,7 @@
 		where company_name like
 		CONCAT('%',#{keyword},'%')
 		or product_name like
-		CONCAT('%',#{keyword},'%') order by create_time limit
+		CONCAT('%',#{keyword},'%') order by create_time desc limit
 		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
 	</select>
 
@@ -84,8 +84,7 @@
 		where company_name like
 		CONCAT('%',#{keyword},'%')
 		or product_name like
-		CONCAT('%',#{keyword},'%') order by create_time limit
-		#{total,jdbcType=INTEGER},#{size,jdbcType=INTEGER}
+		CONCAT('%',#{keyword},'%') 
 	</select>
 
 	<delete id="deleteExposure" parameterType="java.lang.String">
