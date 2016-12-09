@@ -1,4 +1,4 @@
-package com.fpds.util;
+package com.fpds.util.enumeration;
 
 public enum ExposureEnum {
 

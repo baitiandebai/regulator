@@ -14,6 +14,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import com.fpds.entity.QualityExposure;
+import com.fpds.util.enumeration.ExposureEnum;
 
 public class AnalyzeExcel {
 

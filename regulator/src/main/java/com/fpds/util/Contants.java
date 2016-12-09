@@ -12,4 +12,8 @@ public class Contants {
 	
 	//上传图片的保存路径
 	public final static String SAVE_PATH_IMAGE = "/image/";
+	//验证码地址
+	public final static String VALID_IMAGE = "/image/image.jpg";
+	//登录的url
+	public final static String LOGIN_PATH = "http://localhost:8080/eid/consumer/login_by_other.do";
 }

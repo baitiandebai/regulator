@@ -2,6 +2,8 @@ package com.fpds.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fpds.util.Contants;
+import com.fpds.util.CreateImageUtil;
 
 /**
  * 公共的接口类
@@ -55,5 +59,28 @@ public class CommonController {
 						+ request.getContextPath(); 
   
 		return path2 + Contants.SAVE_PATH_IMAGE + nameLocal;
+	}
+	@RequestMapping(value="/verification/image",
+			method=RequestMethod.GET)
+	@ResponseBody
+	public String uploadImage(HttpServletRequest request){
+		String path = request.getSession().getServletContext().getRealPath("");
+		
+		Integer num = (int) (Math.random()*10000);
+        while(num < 1000){
+        	num = (int) (Math.random()*10000);
+        }
+		
+		CreateImageUtil.create(path + Contants.VALID_IMAGE,num.toString());
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("http://" + request.getServerName());
+		sb.append(":" + request.getServerPort());
+		sb.append(request.getContextPath() + Contants.VALID_IMAGE);
+		
+		Map<String,String> map = new HashMap<>();
+		map.put("path", sb.toString());
+		map.put("code", num.toString());
+		return JSONObject.toJSONString(map);
 	}
 }
